@@ -1,0 +1,138 @@
+graph TB
+    %% Client Layer
+    subgraph Client["🖥️ Client Layer"]
+        WebApp[📱 Progressive Web App<br/>React/Vue.js]
+        MobileApp[📱 Mobile App<br/>React Native/PWA]
+        AdminPanel[⚙️ Admin Dashboard<br/>React/Vue.js]
+        DriverApp[🚛 Driver Mobile App<br/>React Native/PWA]
+    end
+
+    %% API Gateway
+    APIGateway[🚪 API Gateway<br/>Kong/AWS API Gateway]
+
+    %% Application Layer
+    subgraph AppLayer["🔧 Application Layer"]
+        AuthService[🔐 Authentication Service<br/>JWT + Ghana Card Verification]
+        ProductService[📦 Product Service<br/>Catalog + Inventory Management]
+        OrderService[📋 Order Service<br/>Cart + Order Processing]
+        PaymentService[💳 Payment Service<br/>Multi-Gateway Integration]
+        CreditService[💰 Credit Management<br/>Auto Payment + Penalties]
+        DeliveryService[🚚 Delivery Service<br/>Route + Distance Pricing]
+        ServiceBooking[🏗️ Service Booking<br/>Consultancy + Scheduling]
+        NotificationService[📢 Notification Service<br/>SMS + Email + Push]
+        AnalyticsService[📊 Analytics Service<br/>Reports + Business Intelligence]
+    end
+
+    %% Business Logic Layer
+    subgraph BusinessLogic["🧠 Business Logic Layer"]
+        PricingEngine[💲 Pricing Engine<br/>Volume Discounts + Distance]
+        InventorySync[🔄 Inventory Sync<br/>Real-time Stock Management]
+        CreditEngine[🏦 Credit Processing<br/>Auto-deduction + Reminders]
+        DeliveryOptimizer[🗺️ Route Optimizer<br/>Zone Assignment + Tracking]
+        ServiceScheduler[📅 Service Scheduler<br/>Consultant Management]
+    end
+
+    %% Data Layer
+    subgraph DataLayer["💾 Data Layer"]
+        MainDB[(🗄️ Main Database<br/>PostgreSQL<br/>Users, Orders, Products)]
+        CacheDB[(⚡ Cache Layer<br/>Redis<br/>Sessions + Cart)]
+        FileStorage[(📁 File Storage<br/>AWS S3/Local<br/>Images + Documents)]
+        AnalyticsDB[(📈 Analytics DB<br/>Time-series DB<br/>Business Metrics)]
+    end
+
+    %% External Services
+    subgraph External["🌐 External Services"]
+        PaymentGateways[💳 Payment Gateways<br/>Flutterwave + MTN MoMo<br/>Vodafone + Telecel + Banks]
+        GhanaCardAPI[🆔 Ghana Card API<br/>Identity Verification]
+        GoogleMaps[🗺️ Google Maps API<br/>Distance + Geocoding]
+        SMSGateway[📱 SMS Gateway<br/>Bulk SMS Provider]
+        EmailService[📧 Email Service<br/>SendGrid/AWS SES]
+        GoogleSheets[📊 Google Sheets API<br/>Inventory Sync]
+        BankAPIs[🏦 Bank APIs<br/>Automated Deductions]
+    end
+
+    %% Infrastructure
+    subgraph Infrastructure["☁️ Infrastructure"]
+        LoadBalancer[⚖️ Load Balancer<br/>Nginx/AWS ALB]
+        WebServer[🖥️ Web Servers<br/>Node.js/Docker]
+        CDN[🌍 CDN<br/>CloudFlare/AWS CloudFront]
+        Monitoring[📊 Monitoring<br/>Prometheus + Grafana]
+        Backup[💾 Backup System<br/>Automated DB Backups]
+    end
+
+    %% Connections
+    %% Client to API Gateway
+    WebApp --> APIGateway
+    MobileApp --> APIGateway
+    AdminPanel --> APIGateway
+    DriverApp --> APIGateway
+
+    %% API Gateway to Services
+    APIGateway --> AuthService
+    APIGateway --> ProductService
+    APIGateway --> OrderService
+    APIGateway --> PaymentService
+    APIGateway --> CreditService
+    APIGateway --> DeliveryService
+    APIGateway --> ServiceBooking
+    APIGateway --> NotificationService
+    APIGateway --> AnalyticsService
+
+    %% Services to Business Logic
+    ProductService --> InventorySync
+    OrderService --> PricingEngine
+    PaymentService --> CreditEngine
+    DeliveryService --> DeliveryOptimizer
+    ServiceBooking --> ServiceScheduler
+    CreditService --> CreditEngine
+
+    %% Business Logic to Data
+    AuthService --> MainDB
+    ProductService --> MainDB
+    OrderService --> MainDB
+    PaymentService --> MainDB
+    CreditService --> MainDB
+    DeliveryService --> MainDB
+    ServiceBooking --> MainDB
+    AnalyticsService --> AnalyticsDB
+
+    %% Cache Layer
+    AuthService --> CacheDB
+    OrderService --> CacheDB
+    ProductService --> CacheDB
+
+    %% File Storage
+    ProductService --> FileStorage
+    AuthService --> FileStorage
+    ServiceBooking --> FileStorage
+
+    %% External Service Connections
+    AuthService --> GhanaCardAPI
+    PaymentService --> PaymentGateways
+    CreditService --> BankAPIs
+    DeliveryService --> GoogleMaps
+    NotificationService --> SMSGateway
+    NotificationService --> EmailService
+    InventorySync --> GoogleSheets
+
+    %% Infrastructure Connections
+    APIGateway --> LoadBalancer
+    LoadBalancer --> WebServer
+    WebApp --> CDN
+    MobileApp --> CDN
+    WebServer --> Monitoring
+    MainDB --> Backup
+    AnalyticsDB --> Backup
+
+    %% Styling
+    classDef clientStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef serviceStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef dataStyle fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef externalStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef infrastructureStyle fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+
+    class WebApp,MobileApp,AdminPanel,DriverApp clientStyle
+    class AuthService,ProductService,OrderService,PaymentService,CreditService,DeliveryService,ServiceBooking,NotificationService,AnalyticsService serviceStyle
+    class MainDB,CacheDB,FileStorage,AnalyticsDB dataStyle
+    class PaymentGateways,GhanaCardAPI,GoogleMaps,SMSGateway,EmailService,GoogleSheets,BankAPIs externalStyle
+    class LoadBalancer,WebServer,CDN,Monitoring,Backup infrastructureStyle

@@ -1,0 +1,496 @@
+erDiagram
+    %% User Management & Authentication
+    USERS {
+        uuid user_id PK
+        varchar email UK
+        varchar phone_number UK
+        varchar password_hash
+        varchar first_name
+        varchar last_name
+        varchar ghana_card_number UK
+        varchar ghana_card_image_url
+        boolean ghana_card_verified
+        enum user_type "customer, contractor, admin, driver, consultant, warehouse_staff, finance"
+        boolean is_active
+        timestamp email_verified_at
+        timestamp phone_verified_at
+        date date_of_birth
+        timestamp created_at
+        timestamp updated_at
+        timestamp last_login_at
+    }
+
+    USER_ADDRESSES {
+        uuid address_id PK
+        uuid user_id FK
+        varchar address_line_1
+        varchar address_line_2
+        varchar city
+        varchar region
+        varchar postal_code
+        decimal latitude
+        decimal longitude
+        boolean is_primary
+        enum address_type "home, office, site, warehouse"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    USER_PROFILES {
+        uuid profile_id PK
+        uuid user_id FK
+        varchar company_name
+        varchar business_registration_number
+        varchar vat_number
+        boolean vat_exempt
+        varchar vat_exemption_certificate_url
+        text business_description
+        enum customer_tier "bronze, silver, gold, platinum"
+        boolean is_first_20_customer
+        timestamp first_20_registered_at
+        decimal credit_limit
+        integer loyalty_points
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    %% Product Management
+    PRODUCT_CATEGORIES {
+        uuid category_id PK
+        varchar category_name UK
+        varchar category_slug UK
+        text description
+        varchar icon_url
+        boolean is_active
+        integer sort_order
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PRODUCTS {
+        uuid product_id PK
+        uuid category_id FK
+        varchar product_name
+        varchar product_slug UK
+        varchar sku UK
+        text description
+        text specifications
+        decimal unit_price
+        varchar unit_of_measure
+        integer minimum_order_quantity
+        boolean is_bulk_item
+        integer bulk_threshold
+        decimal bulk_discount_percentage
+        varchar brand
+        varchar batch_number
+        text safety_data_sheet_url
+        boolean requires_special_handling
+        decimal weight_kg
+        varchar dimensions
+        boolean is_active
+        boolean is_featured
+        integer sort_order
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PRODUCT_IMAGES {
+        uuid image_id PK
+        uuid product_id FK
+        varchar image_url
+        varchar alt_text
+        boolean is_primary
+        integer sort_order
+        timestamp created_at
+    }
+
+    INVENTORY {
+        uuid inventory_id PK
+        uuid product_id FK
+        integer current_stock
+        integer reserved_stock
+        integer available_stock
+        integer reorder_level
+        integer maximum_stock
+        decimal cost_price
+        varchar supplier_info
+        date last_restocked_date
+        varchar warehouse_location
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    INVENTORY_MOVEMENTS {
+        uuid movement_id PK
+        uuid product_id FK
+        uuid user_id FK
+        enum movement_type "in, out, adjustment, reservation, release"
+        integer quantity
+        integer previous_stock
+        integer new_stock
+        varchar reference_number
+        text notes
+        timestamp created_at
+    }
+
+    %% Services Management
+    SERVICES {
+        uuid service_id PK
+        varchar service_name
+        varchar service_slug UK
+        text description
+        enum service_type "consultancy, architectural, evaluation, supervision, construction, rental"
+        decimal base_price
+        varchar pricing_unit "hourly, daily, project, item"
+        integer estimated_duration_hours
+        boolean requires_site_visit
+        text requirements
+        boolean is_active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    CONSULTANTS {
+        uuid consultant_id PK
+        uuid user_id FK
+        varchar specialization
+        text qualifications
+        decimal hourly_rate
+        boolean is_available
+        text availability_schedule
+        integer max_concurrent_projects
+        decimal rating
+        integer total_projects_completed
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    SERVICE_BOOKINGS {
+        uuid booking_id PK
+        uuid service_id FK
+        uuid customer_id FK
+        uuid consultant_id FK
+        varchar project_name
+        text project_description
+        text requirements
+        enum status "pending, confirmed, in_progress, completed, cancelled"
+        datetime scheduled_start
+        datetime scheduled_end
+        datetime actual_start
+        datetime actual_end
+        decimal quoted_price
+        decimal final_price
+        text notes
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    %% Order Management
+    ORDERS {
+        uuid order_id PK
+        varchar order_number UK
+        uuid customer_id FK
+        uuid assigned_driver_id FK
+        decimal subtotal
+        decimal delivery_fee
+        decimal discount_amount
+        decimal tax_amount
+        decimal tip_amount
+        decimal total_amount
+        enum order_status "pending, confirmed, processing, dispatched, delivered, cancelled, returned"
+        enum payment_status "pending, paid, failed, refunded, partial"
+        varchar project_tag
+        text delivery_instructions
+        datetime delivery_date
+        enum delivery_time_slot "morning, afternoon, evening, anytime"
+        varchar pickup_person_name
+        varchar pickup_person_phone
+        varchar pickup_person_id
+        boolean is_pickup_order
+        timestamp order_placed_at
+        timestamp confirmed_at
+        timestamp dispatched_at
+        timestamp delivered_at
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    ORDER_ITEMS {
+        uuid order_item_id PK
+        uuid order_id FK
+        uuid product_id FK
+        integer quantity
+        decimal unit_price
+        decimal discount_percentage
+        decimal line_total
+        text item_notes
+        timestamp created_at
+    }
+
+    ORDER_ADDRESSES {
+        uuid order_address_id PK
+        uuid order_id FK
+        enum address_type "billing, delivery"
+        varchar address_line_1
+        varchar address_line_2
+        varchar city
+        varchar region
+        varchar postal_code
+        decimal latitude
+        decimal longitude
+        decimal distance_km
+        timestamp created_at
+    }
+
+    %% Shopping Cart
+    CART_ITEMS {
+        uuid cart_item_id PK
+        uuid user_id FK
+        uuid product_id FK
+        integer quantity
+        decimal unit_price
+        text notes
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    %% Payment Management
+    PAYMENTS {
+        uuid payment_id PK
+        uuid order_id FK
+        uuid user_id FK
+        varchar payment_reference UK
+        decimal amount
+        enum payment_method "mtn_momo, vodafone_cash, telecel_cash, bank_transfer, card, cash_on_delivery"
+        enum payment_status "pending, successful, failed, cancelled, refunded"
+        varchar gateway_reference
+        varchar gateway_response
+        text failure_reason
+        timestamp processed_at
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    CREDIT_ACCOUNTS {
+        uuid credit_account_id PK
+        uuid user_id FK
+        decimal credit_limit
+        decimal current_balance
+        decimal available_credit
+        enum account_status "active, suspended, closed"
+        varchar linked_account_type "bank, momo, telecel, virtual_card"
+        varchar linked_account_number
+        varchar linked_account_name
+        integer payment_terms_days
+        decimal interest_rate
+        decimal penalty_rate
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    CREDIT_TRANSACTIONS {
+        uuid transaction_id PK
+        uuid credit_account_id FK
+        uuid order_id FK
+        enum transaction_type "purchase, payment, penalty, adjustment"
+        decimal amount
+        decimal balance_before
+        decimal balance_after
+        date due_date
+        enum status "pending, paid, overdue, written_off"
+        varchar reference_number
+        text description
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PAYMENT_REMINDERS {
+        uuid reminder_id PK
+        uuid credit_transaction_id FK
+        enum reminder_type "sms, email, call"
+        varchar recipient
+        text message_content
+        enum status "pending, sent, delivered, failed"
+        datetime scheduled_at
+        datetime sent_at
+        timestamp created_at
+    }
+
+    %% Delivery Management
+    DELIVERY_ZONES {
+        uuid zone_id PK
+        varchar zone_name
+        text zone_description
+        decimal base_delivery_fee
+        decimal per_km_rate
+        integer max_distance_km
+        boolean same_day_available
+        text delivery_conditions
+        boolean is_active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    DELIVERY_ASSIGNMENTS {
+        uuid assignment_id PK
+        uuid order_id FK
+        uuid driver_id FK
+        enum status "assigned, accepted, picked_up, in_transit, delivered, failed"
+        datetime assigned_at
+        datetime accepted_at
+        datetime picked_up_at
+        datetime delivered_at
+        decimal tip_amount
+        integer customer_rating
+        text delivery_notes
+        text customer_feedback
+        varchar delivery_photo_url
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    DELIVERY_ISSUES {
+        uuid issue_id PK
+        uuid assignment_id FK
+        enum issue_type "damage, delay, wrong_address, customer_unavailable, other"
+        text description
+        varchar photo_evidence_url
+        enum status "reported, investigating, resolved, closed"
+        datetime reported_at
+        datetime resolved_at
+        text resolution_notes
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    %% Damage Reports
+    DAMAGE_REPORTS {
+        uuid report_id PK
+        uuid order_id FK
+        uuid product_id FK
+        uuid reported_by_user_id FK
+        enum damage_type "broken, defective, wrong_item, missing, other"
+        text description
+        varchar photo_evidence_url
+        datetime damage_discovered_at
+        datetime report_deadline
+        boolean is_within_deadline
+        enum status "pending, approved, rejected, resolved"
+        enum resolution_type "replacement, refund, credit"
+        text admin_notes
+        datetime resolved_at
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    %% Notifications
+    NOTIFICATIONS {
+        uuid notification_id PK
+        uuid user_id FK
+        varchar title
+        text message
+        enum type "order, payment, delivery, promotion, birthday, system"
+        enum channel "email, sms, push, in_app"
+        enum status "pending, sent, delivered, failed, read"
+        text metadata
+        datetime scheduled_at
+        datetime sent_at
+        datetime read_at
+        timestamp created_at
+    }
+
+    %% Analytics & Reporting
+    CUSTOMER_ANALYTICS {
+        uuid analytics_id PK
+        uuid user_id FK
+        date analytics_date
+        integer orders_count
+        decimal total_spent
+        decimal average_order_value
+        integer products_purchased
+        integer days_since_last_order
+        varchar favorite_category
+        varchar preferred_payment_method
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PRODUCT_ANALYTICS {
+        uuid analytics_id PK
+        uuid product_id FK
+        date analytics_date
+        integer views_count
+        integer orders_count
+        integer quantity_sold
+        decimal revenue_generated
+        decimal conversion_rate
+        integer cart_additions
+        integer comparisons_count
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    %% System Configuration
+    SYSTEM_SETTINGS {
+        uuid setting_id PK
+        varchar setting_key UK
+        text setting_value
+        varchar description
+        enum data_type "string, number, boolean, json"
+        boolean is_editable
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    AUDIT_LOGS {
+        uuid log_id PK
+        uuid user_id FK
+        varchar action_type
+        varchar table_name
+        varchar record_id
+        text old_values
+        text new_values
+        varchar ip_address
+        varchar user_agent
+        timestamp created_at
+    }
+
+    %% Relationships
+    USERS ||--o{ USER_ADDRESSES : has
+    USERS ||--o| USER_PROFILES : has
+    USERS ||--o{ ORDERS : places
+    USERS ||--o{ CART_ITEMS : maintains
+    USERS ||--o{ PAYMENTS : makes
+    USERS ||--o{ CREDIT_ACCOUNTS : owns
+    USERS ||--o{ SERVICE_BOOKINGS : books
+    USERS ||--o{ CONSULTANTS : is
+    USERS ||--o{ DELIVERY_ASSIGNMENTS : assigned_to
+    USERS ||--o{ NOTIFICATIONS : receives
+    USERS ||--o{ CUSTOMER_ANALYTICS : tracked_in
+    USERS ||--o{ AUDIT_LOGS : generates
+
+    PRODUCT_CATEGORIES ||--o{ PRODUCTS : contains
+    PRODUCTS ||--o{ PRODUCT_IMAGES : has
+    PRODUCTS ||--o| INVENTORY : tracked_in
+    PRODUCTS ||--o{ INVENTORY_MOVEMENTS : involves
+    PRODUCTS ||--o{ ORDER_ITEMS : ordered_as
+    PRODUCTS ||--o{ CART_ITEMS : added_to
+    PRODUCTS ||--o{ DAMAGE_REPORTS : reported_for
+    PRODUCTS ||--o{ PRODUCT_ANALYTICS : tracked_in
+
+    SERVICES ||--o{ SERVICE_BOOKINGS : booked_as
+    CONSULTANTS ||--o{ SERVICE_BOOKINGS : assigned_to
+
+    ORDERS ||--o{ ORDER_ITEMS : contains
+    ORDERS ||--o{ ORDER_ADDRESSES : has
+    ORDERS ||--o{ PAYMENTS : paid_through
+    ORDERS ||--o{ DELIVERY_ASSIGNMENTS : assigned_for
+    ORDERS ||--o{ DAMAGE_REPORTS : reported_for
+    ORDERS ||--o{ CREDIT_TRANSACTIONS : generates
+
+    CREDIT_ACCOUNTS ||--o{ CREDIT_TRANSACTIONS : tracks
+    CREDIT_TRANSACTIONS ||--o{ PAYMENT_REMINDERS : triggers
+
+    DELIVERY_ASSIGNMENTS ||--o{ DELIVERY_ISSUES : may_have
+
+    INVENTORY ||--o{ INVENTORY_MOVEMENTS : tracks
