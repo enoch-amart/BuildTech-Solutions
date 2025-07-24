@@ -1,6 +1,6 @@
 # Merged Epics & Prioritized User Stories (with MoSCoW + INVEST principles)
 
-**Platform: eBuildify | Team: BuildTech Solution | Client: VillageTech**
+**Platform: eBuildify | Team: BuildTech Solution | Client: VSol Little By Little Enterprise**
 
 ## EPIC 1: Order Management System (Must Have)| Client: VillageTech
 

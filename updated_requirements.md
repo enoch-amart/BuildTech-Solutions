@@ -2,7 +2,7 @@
 
 **Platform Name: eBuildify**  
 **Team: BuildTech Solution**
-**Client: VillageTech**
+**Client: Sol Little By Little Enterprises**
 
 ## I. Business Goals & Vision
 
