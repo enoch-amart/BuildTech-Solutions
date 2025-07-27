@@ -3,7 +3,7 @@
 
 **Team Name:** BuildTech Solutions  
 **Project Title:** eBuildify - Integrated Building Materials E-Commerce Platform  
-**Client:** VillageTech Sol Little By Little Enterprise  
+**Client:**  Sol Little By Little Enterprise  
 **Submission Date:** July 27, 2025  
 
 ---
@@ -12,13 +12,13 @@
 
 ### Client Overview
 
-**Client Name:** VillageTech Sol Little By Little Enterprise  
+**Client Name:**  Sol Little By Little Enterprise  
 **Contact Person:** Mr. Enoch Amarteifio (Product Lead/Client Representative)  
-**Business Address:** Accra, Greater Accra Region, Ghana  
+**Business Address:** Goka, Bono region, Ghana  
 **Industry:** Building Materials Supply & Construction Services  
 **Business Model:** B2B and B2C building materials distribution with value-added services
 
-VillageTech Sol Little By Little Enterprise is an established building materials supplier operating primarily in the Greater Accra region, serving both individual customers and commercial contractors. The company currently manages operations through manual processes including phone orders, WhatsApp communications, and spreadsheet-based inventory management. They supply a comprehensive range of construction materials including cement, iron rods, roofing materials, paints, plumbing supplies, and professional consultancy services.
+ Sol Little By Little Enterprise is an established building materials supplier operating primarily in the Goka Bono region, serving both individual customers and commercial contractors. The company currently manages operations through manual processes including phone orders, WhatsApp communications, and spreadsheet-based inventory management. They supply a comprehensive range of construction materials including cement, iron rods, roofing materials, paints, plumbing supplies, and professional consultancy services.
 
 ### Problem Statement
 
