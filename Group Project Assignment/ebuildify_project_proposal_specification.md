@@ -44,8 +44,8 @@ This is the experience we're creating.
 
 ### User Journey Visualization
 
-![Use Case Diagram](../images/eBuildify%20-%20Use%20Case%20Diagram%20_%20Mermaid%20Chart-2025-07-24-113804.png)
-_eBuildify Use Case Diagram_
+![Use Case Daigram](../images/Use%20Case%20Diagram-%20visible.png)
+\_eBuildify Use Case Diagram\*
 
 ### Primary Users (From Our Research)
 
@@ -138,7 +138,7 @@ _eBuildify Use Case Diagram_
 
 **System Architecture Overview**
 
-![System Architecture Daigram](/images/eBuildify%20-%20System%20Architecture%20Diagram%20_%20Mermaid%20Chart-2025-07-24-113405.png)
+![System Architecture Daigram](../images/eBuildify%20-%20System%20Architecture%20Diagram%20_%20Mermaid%20Chart-2025-07-24-113405.png)
 _[eBuildify System Architecture Diagram]_
 
 **Frontend: React with Ghana Optimizations**
@@ -173,7 +173,7 @@ Why PostgreSQL?
 
 **Database Structure & Relationships**
 
-![Database ERD Diagram](/images/eBuildify%20-%20Database%20ERD%20Diagram%20_%20Mermaid%20Chart-2025-07-24-114100.png)
+![Database ERD Diagram](../images/eBuildify%20-%20Database%20ERD%20Diagram%20_%20Mermaid%20Chart-2025-07-24-114100.png)
 _eBuildify Database ERD Diagram_
 
 ---
