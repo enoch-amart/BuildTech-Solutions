@@ -1,0 +1,168 @@
+graph TB
+    %% Actors
+    Customer[👤 Customer]
+    Contractor[🏗️ Contractor]
+    Admin[👨‍💼 Admin]
+    Driver[🚛 Driver]
+    Consultant[👨‍🔬 Consultant]
+    Finance[💰 Finance Team]
+    Warehouse[📦 Warehouse Staff]
+    System[🤖 System]
+
+    %% Main System Boundary
+    subgraph eBuildify["🏢 eBuildify Platform"]
+        
+        %% Customer Use Cases
+        subgraph CustomerUC["Customer Management"]
+            UC1[Register with Ghana Card]
+            UC2[Browse Product Catalog]
+            UC3[Search & Filter Products]
+            UC4[Add to Cart]
+            UC5[Compare Products]
+            UC6[Place Order]
+            UC7[Make Payment]
+            UC8[Track Order Status]
+            UC9[Report Damaged Items]
+            UC10[Reorder from History]
+            UC11[Assign Pickup Person]
+            UC12[Rate & Tip Driver]
+        end
+
+        %% Credit Management Use Cases
+        subgraph CreditUC["Credit Management"]
+            UC13[Apply for Credit Terms]
+            UC14[Set Payment Schedule]
+            UC15[Link Payment Account]
+            UC16[Receive Payment Reminders]
+            UC17[Pay Outstanding Balance]
+        end
+
+        %% Service Booking Use Cases
+        subgraph ServiceUC["Service Booking"]
+            UC18[Book Consultancy Service]
+            UC19[Schedule Site Visit]
+            UC20[Request Material Evaluation]
+            UC21[Book Architectural Drawing]
+            UC22[Request Building Contract]
+            UC23[Rent Equipment]
+        end
+
+        %% B2B Contractor Use Cases
+        subgraph B2BUC["B2B Features"]
+            UC24[Tag Orders by Project]
+            UC25[Request VAT Exemption]
+            UC26[Multi-site Delivery]
+            UC27[Bulk Order Discounts]
+        end
+
+        %% Admin Use Cases
+        subgraph AdminUC["Admin Management"]
+            UC28[Manage Product Catalog]
+            UC29[Process Credit Applications]
+            UC30[Assign Delivery Routes]
+            UC31[Monitor Sales Analytics]
+            UC32[Manage User Roles]
+            UC33[Handle Returns/Refunds]
+            UC34[Manage Consultants]
+        end
+
+        %% System Automated Use Cases
+        subgraph SystemUC["System Automation"]
+            UC35[Calculate Distance Pricing]
+            UC36[Send Payment Reminders]
+            UC37[Apply Late Penalties]
+            UC38[Sync Inventory]
+            UC39[Generate Reports]
+            UC40[Send Birthday Wishes]
+            UC41[Process Automatic Payments]
+        end
+
+        %% Delivery Use Cases
+        subgraph DeliveryUC["Delivery Management"]
+            UC42[Accept Delivery Assignment]
+            UC43[Update Delivery Status]
+            UC44[Report Delivery Issues]
+            UC45[Collect Payment - COD]
+            UC46[Confirm Delivery]
+        end
+    end
+
+    %% Actor Relationships
+    Customer --> UC1
+    Customer --> UC2
+    Customer --> UC3
+    Customer --> UC4
+    Customer --> UC5
+    Customer --> UC6
+    Customer --> UC7
+    Customer --> UC8
+    Customer --> UC9
+    Customer --> UC10
+    Customer --> UC11
+    Customer --> UC12
+    Customer --> UC13
+    Customer --> UC14
+    Customer --> UC15
+    Customer --> UC16
+    Customer --> UC17
+    Customer --> UC18
+    Customer --> UC19
+    Customer --> UC20
+    Customer --> UC21
+    Customer --> UC22
+    Customer --> UC23
+
+    Contractor --> UC24
+    Contractor --> UC25
+    Contractor --> UC26
+    Contractor --> UC27
+    Contractor --> UC2
+    Contractor --> UC6
+    Contractor --> UC13
+
+    Admin --> UC28
+    Admin --> UC29
+    Admin --> UC30
+    Admin --> UC31
+    Admin --> UC32
+    Admin --> UC33
+    Admin --> UC34
+
+    Driver --> UC42
+    Driver --> UC43
+    Driver --> UC44
+    Driver --> UC45
+    Driver --> UC46
+
+    Finance --> UC29
+    Finance --> UC33
+    Finance --> UC31
+
+    Warehouse --> UC28
+    Warehouse --> UC38
+
+    Consultant --> UC19
+    Consultant --> UC20
+    Consultant --> UC21
+    Consultant --> UC22
+
+    System --> UC35
+    System --> UC36
+    System --> UC37
+    System --> UC38
+    System --> UC39
+    System --> UC40
+    System --> UC41
+
+    %% Use Case Dependencies (includes)
+    UC6 -.->|includes| UC35
+    UC7 -.->|includes| UC41
+    UC13 -.->|includes| UC29
+    UC17 -.->|includes| UC37
+    UC8 -.->|includes| UC43
+    UC9 -.->|includes| UC44
+
+    %% Use Case Extensions (extends)
+    UC27 -.->|extends| UC6
+    UC26 -.->|extends| UC6
+    UC12 -.->|extends| UC46

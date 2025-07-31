@@ -1,0 +1,136 @@
+graph LR
+    %% Actors
+    subgraph Actors
+        direction LR
+        A[👤 Customer]
+        B[🏗️ Contractor]
+        C[👨‍💼 Admin]
+        D[🚛 Driver]
+        E[👨‍🔬 Consultant]
+        F[💰 Finance Team]
+        G[📦 Warehouse Staff]
+        H[🤖 System]
+    end
+
+    subgraph eBuildify["🏢 eBuildify Platform"]
+        direction LR
+
+        subgraph Customer_Journey["Customer & Contractor Actions"]
+            direction TB
+            subgraph Shopping["Shopping & Ordering"]
+                UC2[Browse Product Catalog]
+                UC3[Search & Filter Products]
+                UC4[Add to Cart]
+                UC5[Compare Products]
+                UC6[Place Order]
+                UC7[Make Payment]
+            end
+            subgraph Account_Mgmt["Account & Order Management"]
+                UC1[Register with Ghana Card]
+                UC8[Track Order Status]
+                UC9[Report Damaged Items]
+                UC10[Reorder from History]
+                UC11[Assign Pickup Person]
+                UC12[Rate & Tip Driver]
+            end
+            subgraph B2B_Features["B2B & Contractor Tools"]
+                UC24[Tag Orders by Project]
+                UC25[Request VAT Exemption]
+                UC26[Multi-site Delivery]
+                UC27[Bulk Order Discounts]
+            end
+        end
+
+        subgraph Financial_Services["Credit & Finance"]
+            direction TB
+            subgraph Credit_Mgmt["Credit Management"]
+                UC13[Apply for Credit Terms]
+                UC14[Set Payment Schedule]
+                UC15[Link Payment Account]
+                UC16[Receive Payment Reminders]
+                UC17[Pay Outstanding Balance]
+            end
+        end
+
+        subgraph Delivery_Logistics["Delivery & Fulfillment"]
+            direction TB
+            subgraph Delivery_Mgmt["Delivery Management"]
+                UC42[Accept Delivery Assignment]
+                UC43[Update Delivery Status]
+                UC44[Report Delivery Issues]
+                UC45[Collect Payment - COD]
+                UC46[Confirm Delivery]
+            end
+        end
+        
+        subgraph Admin_&_Services["Admin & Professional Services"]
+            direction TB
+            subgraph Service_Booking["Service Booking"]
+                UC18[Book Consultancy Service]
+                UC19[Schedule Site Visit]
+                UC20[Request Material Evaluation]
+                UC21[Book Architectural Drawing]
+                UC22[Request Building Contract]
+                UC23[Rent Equipment]
+            end
+            subgraph Admin_Mgmt["Admin Management"]
+                UC28[Manage Product Catalog]
+                UC29[Process Credit Applications]
+                UC30[Assign Delivery Routes]
+                UC31[Monitor Sales Analytics]
+                UC32[Manage User Roles]
+                UC33[Handle Returns/Refunds]
+                UC34[Manage Consultants]
+            end
+        end
+
+        subgraph Automation["System Automation"]
+            direction TB
+            UC35[Calculate Distance Pricing]
+            UC36[Send Payment Reminders]
+            UC37[Apply Late Penalties]
+            UC38[Sync Inventory]
+            UC39[Generate Reports]
+            UC40[Send Birthday Wishes]
+            UC41[Process Automatic Payments]
+        end
+    end
+
+    %% Actor Relationships
+    A --> Shopping
+    A --> Account_Mgmt
+    A --> Financial_Services
+    A --> Service_Booking
+    
+    B --> Shopping
+    B --> B2B_Features
+    B --> Financial_Services
+    
+    C --> Admin_Mgmt
+    C --> Automation
+    
+    D --> Delivery_Mgmt
+    
+    E --> Service_Booking
+    
+    F --> Admin_Mgmt
+    F --> Automation
+    
+    G --> Admin_Mgmt
+    G --> Automation
+    
+    H --> Automation
+    H --> Admin_Mgmt
+    H --> Delivery_Logistics
+    H --> Financial_Services
+
+    %% Use Case Dependencies
+    UC6 -.->|includes| UC35
+    UC7 -.->|includes| UC41
+    UC13 -.->|includes| UC29
+    UC17 -.->|includes| UC37
+    UC8 -.->|includes| UC43
+    UC9 -.->|includes| UC44
+    UC27 -.->|extends| UC6
+    UC26 -.->|extends| UC6
+    UC12 -.->|extends| UC46
