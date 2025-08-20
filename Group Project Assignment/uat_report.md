@@ -1,12 +1,26 @@
+<div align='center'>
+
 # eBuildify Platform - User Acceptance Testing Report
 
-**DCIT 208 Course Project**  
-**Team:** BuildTech Solutions  
-**Client:** Sol Little By Little Enterprises  
-**UAT Period:** August 15-19, 2025  
-**Report Date:** August 20, 2025
+</div>
+
+<div><br><br></div>
+<div><br><br></div>
+<div><br><br></div>
+
+#### **DCIT 208 Course Project**
+
+#### **Team:** BuildTech Solutions
+
+#### **Client:** Sol Little By Little Enterprises
+
+#### **UAT Period:** August 15-19, 2025
+
+#### **Report Date:** August 20, 2025
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## Executive Summary
 
@@ -20,6 +34,8 @@ This User Acceptance Testing report presents the comprehensive evaluation of the
 - System demonstrates readiness for production deployment with minor conditions
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## 1. UAT Planning & Preparation
 
